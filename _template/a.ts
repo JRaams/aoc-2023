@@ -1,2 +1,2 @@
-const lines: string = await Deno.readTextFile("./input.txt");
+const lines = await Deno.readTextFile("./input.txt");
 const input = lines.split("\n").filter((l) => l);
