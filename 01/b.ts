@@ -1,9 +1,7 @@
-import { getFirstOccurance, getLastOccurance } from "../helpers/strings.ts";
-
 const lines = await Deno.readTextFile("./input.txt");
 const input = lines.split("\n").filter((l) => l);
 
-const numbers: Record<string, number> = {
+const stringToNumbers: Record<string, number> = {
   "1": 1,
   "2": 2,
   "3": 3,
@@ -28,10 +26,14 @@ function solve(input: string[]): number {
   let sum = 0;
 
   input.forEach((line) => {
-    const first = numbers[getFirstOccurance(line, Object.keys(numbers))];
-    const last = numbers[getLastOccurance(line, Object.keys(numbers))];
+    const first = stringToNumbers[
+      line.match(/\d|one|two|three|four|five|six|seven|eight|nine/)!.at(0)!
+    ];
+    const last = stringToNumbers[
+      line.match(/\d|one|two|three|four|five|six|seven|eight|nine/)!.at(-1)!
+    ];
 
-    sum += Number(`${first}${numbers[last]}`);
+    sum += Number(`${first}${stringToNumbers[last]}`);
   });
 
   return sum;
