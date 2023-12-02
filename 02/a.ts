@@ -1,19 +1,19 @@
+import { defaultDict } from "../helpers/defaultdict.ts";
+
 const lines = await Deno.readTextFile("./input.txt");
 const input = lines.split("\n").filter((l) => l);
 
 let idSum = 0;
 
-input.forEach((line, i) => {
-  const blues = Array.from(line.matchAll(/(\d+) blue/g)).map((x) => +x[1]);
-  const greens = Array.from(line.matchAll(/(\d+) green/g)).map((x) => +x[1]);
-  const reds = Array.from(line.matchAll(/(\d+) red/g)).map((x) => +x[1]);
+input.forEach((line, lineNumber) => {
+  const dict = defaultDict(Number);
 
-  if (
-    Math.max(...blues) <= 14 &&
-    Math.max(...greens) <= 13 &&
-    Math.max(...reds) <= 12
-  ) {
-    idSum += i + 1;
+  for (const [_, value, color] of line.matchAll(/(\d+) (\w+)/g)) {
+    dict[color] = Math.max(dict[color], +value);
+  }
+
+  if (dict.blue <= 14 && dict.green <= 13 && dict.red <= 12) {
+    idSum += lineNumber + 1;
   }
 });
 
