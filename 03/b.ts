@@ -13,13 +13,11 @@ symbols
 
     for (let dy = -1; dy <= 1; dy++) {
       for (let dx = -1; dx <= 1; dx++) {
-        if (dy === 0 && dx && 0) continue;
+        const part = parts[symbol.y + dy][symbol.x + dx]; // No symbols at the edge of the grid
+        if (!part || part.used) continue;
 
-        const partNumber = parts[symbol.y + dy][symbol.x + dx]; // No symbols at the edge of the grid
-        if (!partNumber || partNumber.used) continue;
-
-        gearParts.push(partNumber);
-        partNumber.used = true;
+        gearParts.push(part);
+        part.used = true;
       }
     }
 
