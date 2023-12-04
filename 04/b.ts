@@ -1,14 +1,9 @@
-import { defaultDict } from "../helpers/defaultdict.ts";
-
 const lines = await Deno.readTextFile("./input.txt");
 const input = lines.split("\n").filter((l) => l);
 
-const cardCounts = defaultDict(() => 1);
+const cards = new Array(input.length).fill(1);
 
 input.forEach((line, index) => {
-  const number = index + 1;
-  cardCounts[number]; // Init hack
-
   const [winningNumbers, cardNumbers] = line
     .split(": ")[1]
     .split(" | ")
@@ -19,12 +14,12 @@ input.forEach((line, index) => {
   ).length;
 
   for (
-    let i = number;
-    i < number + intersectionCount && i < input.length;
+    let i = index;
+    i < index + intersectionCount && i < input.length;
     i++
   ) {
-    cardCounts[i + 1] += cardCounts[number];
+    cards[i + 1] += cards[index];
   }
 });
 
-console.info(Object.values(cardCounts).reduce((a, b) => a + b));
+console.info(Object.values(cards).reduce((a, b) => a + b));
