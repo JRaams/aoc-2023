@@ -11,9 +11,10 @@ const locations: number[][] = [];
 for (let i = 0; i < seeds.length; i += 2) {
   const initialRange: [number, number] = [seeds[i], seeds[i] + seeds[i + 1]];
   let seedRanges: number[][] = [initialRange];
-  let results: number[][] = [];
 
   maps.forEach((map) => {
+    const results: number[][] = [];
+
     while (seedRanges.length > 0) {
       const currentSeedRange = seedRanges.pop()!;
 
@@ -26,7 +27,6 @@ for (let i = 0; i < seeds.length; i += 2) {
     }
 
     seedRanges = results;
-    results = [];
   });
 
   locations.push(...seedRanges);
