@@ -8,7 +8,7 @@ Solutions using TypeScript \w Deno v1.38
 
 | [01](https://adventofcode.com/2023/day/1)  | [02](https://adventofcode.com/2023/day/2)  | [03](https://adventofcode.com/2023/day/3)  | [04](https://adventofcode.com/2023/day/4)  | [05](https://adventofcode.com/2023/day/5)  | [06](https://adventofcode.com/2023/day/6)  | [07](https://adventofcode.com/2023/day/7)  |
 | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: |
-|                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌑🌑                    |                    🌑🌑                    |
+|                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌑🌑                    |
 | [08](https://adventofcode.com/2023/day/8)  | [09](https://adventofcode.com/2023/day/9)  | [10](https://adventofcode.com/2023/day/10) | [11](https://adventofcode.com/2023/day/11) | [12](https://adventofcode.com/2023/day/12) | [13](https://adventofcode.com/2023/day/13) | [14](https://adventofcode.com/2023/day/14) |
 |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |
 | [15](https://adventofcode.com/2023/day/15) | [16](https://adventofcode.com/2023/day/16) | [17](https://adventofcode.com/2023/day/17) | [18](https://adventofcode.com/2023/day/18) | [19](https://adventofcode.com/2023/day/19) | [20](https://adventofcode.com/2023/day/20) | [21](https://adventofcode.com/2023/day/21) |
@@ -56,3 +56,4 @@ Debugging in Visual Studio Code
 4. [**Scratchcards**] Lidl recursion on scratchcard winnings
 5. [**If You Give A Seed A Fertilizer**] 😠 Collapsing multiple ranges of very
    large numbers
+6. [**Wait For It**] Quick maths with quadratic formula
