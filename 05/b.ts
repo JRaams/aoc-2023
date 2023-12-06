@@ -9,8 +9,8 @@ const maps = lines.map((x) =>
 const locations: number[][] = [];
 
 for (let i = 0; i < seeds.length; i += 2) {
-  const initialRange: [number, number] = [seeds[i], seeds[i] + seeds[i + 1]];
-  let seedRanges: number[][] = [initialRange];
+  const initialRange = [seeds[i], seeds[i] + seeds[i + 1]];
+  let seedRanges = [initialRange];
 
   maps.forEach((map) => {
     const results: number[][] = [];
@@ -18,10 +18,7 @@ for (let i = 0; i < seeds.length; i += 2) {
     while (seedRanges.length > 0) {
       const currentSeedRange = seedRanges.pop()!;
 
-      const [seedSubRanges, newResults] = applyMapToSeedRange(
-        currentSeedRange,
-        map,
-      );
+      const [seedSubRanges, newResults] = applyRange(currentSeedRange, map);
       seedRanges.push(...seedSubRanges);
       results.push(...newResults);
     }
@@ -32,35 +29,35 @@ for (let i = 0; i < seeds.length; i += 2) {
   locations.push(...seedRanges);
 }
 
-function applyMapToSeedRange(currentSeedRange: number[], map: number[][]) {
+function applyRange(currentSeedRange: number[], map: number[][]) {
   let [currentStart, currentEnd] = currentSeedRange;
 
   const seedSubRanges: number[][] = [];
   const newResults: number[][] = [];
   let foundAnyIntersectionInMap = false;
 
-  for (const [mapDest, mapSource, mapRange] of map) {
-    const mapEnd = mapSource + mapRange;
+  for (const [mapDestStart, mapSourceStart, mapRange] of map) {
+    const mapSourceEnd = mapSourceStart + mapRange;
 
     // No intersection for the current map entry with the current range
-    if (currentEnd <= mapSource || mapEnd <= currentStart) {
+    if (currentEnd <= mapSourceStart || mapSourceEnd <= currentStart) {
       continue;
     }
 
     // Some part of the current range extends the front of the map entry
-    if (currentStart < mapSource) {
-      seedSubRanges.push([currentStart, mapSource]);
-      currentStart = mapSource;
+    if (currentStart < mapSourceStart) {
+      seedSubRanges.push([currentStart, mapSourceStart]);
+      currentStart = mapSourceStart;
     }
 
     // Some part of the current range extends the back of the map entry
-    if (mapEnd < currentEnd) {
-      seedSubRanges.push([mapEnd, currentEnd]);
-      currentEnd = mapEnd;
+    if (mapSourceEnd < currentEnd) {
+      seedSubRanges.push([mapSourceEnd, currentEnd]);
+      currentEnd = mapSourceEnd;
     }
 
     // Add the intersecting part between the map entry and current range to the results
-    const offset = mapDest - mapSource;
+    const offset = mapDestStart - mapSourceStart;
     newResults.push([currentStart + offset, currentEnd + offset]);
     foundAnyIntersectionInMap = true;
     break;
