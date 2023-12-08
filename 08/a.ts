@@ -5,26 +5,22 @@ const instructions = instructionsStr.split("");
 const lefts: Record<string, string> = {};
 const rights: Record<string, string> = {};
 for (const line of nodesStr.split("\n")) {
-  const [_, name, leftName, rightName] = line.match(
-    /^(\w+) = \((\w+), (\w+)\)$/,
-  )!;
-  lefts[name] = leftName;
-  rights[name] = rightName;
+  const [_, name, left, right] = line.match(/^(\w+) = \((\w+), (\w+)\)$/)!;
+  lefts[name] = left;
+  rights[name] = right;
 }
 
 let steps = 0;
-let currentInstructionIndex = 0;
-let currentNode = "AAA";
+let node = "AAA";
 
-while (currentNode !== "ZZZ") {
-  const currentInstruction =
-    instructions[currentInstructionIndex++ % instructions.length];
-  if (currentInstruction === "L") {
-    currentNode = lefts[currentNode];
+while (node !== "ZZZ") {
+  const instruction = instructions[steps++ % instructions.length];
+
+  if (instruction === "L") {
+    node = lefts[node];
   } else {
-    currentNode = rights[currentNode];
+    node = rights[node];
   }
-  steps++;
 }
 
 console.info(steps);
