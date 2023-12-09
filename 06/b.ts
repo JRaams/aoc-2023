@@ -17,8 +17,9 @@ console.info(waysToBeatTheRace);
 // B^2 - t * B + d = 0
 
 // (-b [+/-] sqrt(b*b - 4ac)) / 2a
-// a = 1, b = time, c = recordDistance + 1
+// a = 1, b = -time, c = recordDistance
 
-// (--time [+/-] sqrt(time * time - 4 * recordDistance + 1)) / 2
+// (--time [+/-] sqrt(time * time - 4 * recordDistance)) / 2
+// D = sqrt(time * time - 4 * recordDistance) (Subtract 1 for integer rounding logic)
 // x1 = (time - D) / 2
 // x2 = (time + D) / 2
