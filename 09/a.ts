@@ -6,20 +6,15 @@ function extrapolate(input: number[]): number {
 
   const nextList: number[] = [];
   for (let i = 0; i < input.length - 1; i++) {
-    const offset = input[i + 1] - input[i];
-    nextList.push(offset);
+    nextList.push(input[i + 1] - input[i]);
   }
 
-  const next = extrapolate(nextList);
-  return input.at(-1)! + next;
+  return input[input.length - 1] + extrapolate(nextList);
 }
 
 let sum = 0;
-
 for (const line of input) {
-  const nextNumber = extrapolate(line);
-  console.info(line, nextNumber);
-  sum += nextNumber;
+  sum += extrapolate(line);
 }
 
 console.info(sum);
