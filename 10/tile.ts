@@ -1,3 +1,5 @@
+import { Queue } from "../helpers/queue.ts";
+
 export type Tile = {
   index: number;
   char: string;
@@ -26,7 +28,25 @@ export function buildGrid(input: string[]) {
   return { tileGrid, startingTile };
 }
 
-export function getNeighbours(pos: Tile, tileGrid: Tile[][]) {
+export function findVisitedPipes(tileGrid: Tile[][], startingTile: Tile) {
+  const queue = new Queue<Tile>(startingTile);
+  const seen = new Set<number>([startingTile.index]);
+
+  while (queue.length > 0) {
+    const tile = queue.dequeue();
+
+    getNeighbours(tile, tileGrid).forEach((nb) => {
+      if (seen.has(nb.index)) return;
+
+      queue.enqueue(nb);
+      seen.add(nb.index);
+    });
+  }
+
+  return seen;
+}
+
+function getNeighbours(pos: Tile, tileGrid: Tile[][]) {
   const neighbours: Tile[] = [];
 
   if (pos.y - 1 >= 0) {

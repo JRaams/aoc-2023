@@ -10,7 +10,7 @@ Solutions using TypeScript \w Deno v1.38
 | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: |
 |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |
 | [08](https://adventofcode.com/2023/day/8)  | [09](https://adventofcode.com/2023/day/9)  | [10](https://adventofcode.com/2023/day/10) | [11](https://adventofcode.com/2023/day/11) | [12](https://adventofcode.com/2023/day/12) | [13](https://adventofcode.com/2023/day/13) | [14](https://adventofcode.com/2023/day/14) |
-|                    🌟🌟                    |                    🌟🌟                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |
+|                    🌟🌟                    |                    🌟🌟                    |                    🌟🌟                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |
 | [15](https://adventofcode.com/2023/day/15) | [16](https://adventofcode.com/2023/day/16) | [17](https://adventofcode.com/2023/day/17) | [18](https://adventofcode.com/2023/day/18) | [19](https://adventofcode.com/2023/day/19) | [20](https://adventofcode.com/2023/day/20) | [21](https://adventofcode.com/2023/day/21) |
 |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |                    🌑🌑                    |
 | [22](https://adventofcode.com/2023/day/22) | [23](https://adventofcode.com/2023/day/23) | [24](https://adventofcode.com/2023/day/24) | [25](https://adventofcode.com/2023/day/25) |                                            |                                            |                                            |
@@ -61,3 +61,6 @@ Debugging in Visual Studio Code
 8. [**Haunted Wasteland**] Simultaneous node traversal with LCM
 9. [**Mirage Maintenance**] Predicting next value of number sequence via
    extrapolation
+10. [**Pipe Maze**] 😠 Grid problem with multiple connected pipes creating a
+    single continuous loop. Using a parity counter to keep track of passed walls
+    to calculate area inside the loop.
