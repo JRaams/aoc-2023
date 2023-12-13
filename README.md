@@ -56,6 +56,8 @@ Debugging in Visual Studio Code
     an expanding grid.
 12. [**Hot Springs**] Generating and validating arrangements of strings with
     joker characters
+13. [**Point of Incidence**] 😠 Finding lines between columns and rows on grids
+    to fold over and create a mirror image
 
 ### 6. Solution runtime
 

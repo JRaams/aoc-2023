@@ -1,20 +1,19 @@
-import { toTransposedStringArray } from "../helpers/transpose.ts";
+import { toTransposedStringArray, zip } from "../helpers/arrays.ts";
 
 const lines = await Deno.readTextFile("./input.txt");
 const patterns: string[] = lines.trim().split("\n\n");
 
 function findMirrorIndex(grid: string[]) {
   for (let i = 1; i < grid.length; i++) {
-    const above = grid.slice(0, i).reverse();
-    const below = grid.slice(i);
-
-    const aboveStr = above.slice(0, below.length).join("");
-    const belowStr = below.slice(0, above.length).join("");
+    const aboveMirror = grid.slice(0, i).reverse();
+    const belowMirror = grid.slice(i);
 
     let differentChars = 0;
-    for (let x = 0; x < aboveStr.length; x++) {
-      if (aboveStr[x] !== belowStr[x]) {
-        differentChars++;
+    for (const [row1, row2] of zip(aboveMirror, belowMirror)) {
+      for (let x = 0; x < row1.length; x++) {
+        if (row1[x] !== row2[x]) {
+          differentChars++;
+        }
       }
     }
 
@@ -26,12 +25,12 @@ function findMirrorIndex(grid: string[]) {
   return 0;
 }
 
-let total = 0;
+let sum = 0;
 
 patterns.forEach((pattern) => {
   const rows = pattern.split("\n");
   const transposedPattern = toTransposedStringArray(rows);
-  total += 100 * findMirrorIndex(rows) + findMirrorIndex(transposedPattern);
+  sum += 100 * findMirrorIndex(rows) + findMirrorIndex(transposedPattern);
 });
 
-console.info(total);
+console.info(sum);
