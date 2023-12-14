@@ -58,6 +58,8 @@ Debugging in Visual Studio Code
     joker characters
 13. [**Point of Incidence**] 😠 Finding lines between columns and rows on grids
     to fold over and create a mirror image
+14. [**Parabolic Reflector Dish**] Rolling balls NESW on a tilting grid, cycle
+    detection to prevent doing this a literal billion times.
 
 ### 6. Solution runtime
 
