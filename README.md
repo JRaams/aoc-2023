@@ -60,6 +60,8 @@ Debugging in Visual Studio Code
     to fold over and create a mirror image
 14. [**Parabolic Reflector Dish**] Rolling balls NESW on a tilting grid, cycle
     detection to prevent doing this a literal billion times.
+15. [**Lens Library**] Creating a simple hashing function & some simple array
+    operations (Did day 5 and 15 get swapped..?)
 
 ### 6. Solution runtime
 
