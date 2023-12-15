@@ -1,7 +1,8 @@
 const lines = await Deno.readTextFile("./input.txt");
 const input: string[] = lines.trim().split(",");
 
-type Boxes = [string, number][][];
+type Box = { label: string; focalLength: string }[];
+type Boxes = Box[];
 
 function hashString(input: string): number {
   let result = 0;
@@ -23,18 +24,18 @@ function loadBoxes(input: string[]): Boxes {
     if (part.endsWith("-")) {
       const label = part.slice(0, -1);
       const hash = hashString(label);
-      boxes[hash] = boxes[hash].filter((x) => x[0] !== label);
+      boxes[hash] = boxes[hash].filter((x) => x.label !== label);
       return;
     }
 
     const [label, focalLength] = part.split("=");
     const hash = hashString(label);
 
-    const existingLens = boxes[hash].find((x) => x[0] === label);
+    const existingLens = boxes[hash].find((x) => x.label === label);
     if (existingLens) {
-      existingLens[1] = Number(focalLength);
+      existingLens.focalLength = focalLength;
     } else {
-      boxes[hash].push([label, Number(focalLength)]);
+      boxes[hash].push({ label, focalLength });
     }
   });
 
@@ -46,7 +47,7 @@ let sum = 0;
 
 boxes.forEach((box, boxIndex) => {
   box.forEach((slot, slotIndex) => {
-    sum += (boxIndex + 1) * (slotIndex + 1) * slot[1];
+    sum += (boxIndex + 1) * (slotIndex + 1) * Number(slot.focalLength);
   });
 });
 
