@@ -67,4 +67,4 @@ Debugging in Visual Studio Code
 
 ### 6. Solution runtime
 
-![Bar chart of solution runtime in ms](./assets/runtime.png)
+![Bar chart of solution runtime in ms](./gnuplot/runtimes.png)
