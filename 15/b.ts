@@ -1,15 +1,15 @@
 const lines = await Deno.readTextFile("./input.txt");
 const input: string[] = lines.trim().split(",");
 
-type Box = { label: string; focalLength: string }[];
+type Lens = { label: string; focalLength: string };
+type Box = Lens[];
 type Boxes = Box[];
 
 function hashString(input: string): number {
   let result = 0;
 
   for (let i = 0; i < input.length; i++) {
-    const ascii = input.charCodeAt(i);
-    result += ascii;
+    result += input.charCodeAt(i);
     result *= 17;
     result = result % 256;
   }

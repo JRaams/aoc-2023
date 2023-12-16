@@ -4,8 +4,7 @@ const input: string[] = lines.trim().split(",");
 function hashString(input: string): number {
   let result = 0;
   for (let i = 0; i < input.length; i++) {
-    const ascii = input.charCodeAt(i);
-    result += ascii;
+    result += input.charCodeAt(i);
     result *= 17;
     result = result % 256;
   }
