@@ -62,6 +62,8 @@ Debugging in Visual Studio Code
     detection to prevent doing this a literal billion times.
 15. [**Lens Library**] Creating a simple hashing function & some simple array
     operations (Did day 5 and 15 get swapped..?)
+16. [**The Floor Will Be Lava**] Manouvering a light beam through a grid of
+    lasers with offset mirrors, tricky rotations.
 
 ### 6. Solution runtime
 

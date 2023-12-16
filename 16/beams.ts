@@ -1,20 +1,33 @@
 export enum Direction {
-  North,
-  West,
-  South,
-  East,
+  North = "North",
+  East = "East",
+  South = "South",
+  West = "West",
 }
 
-function getDirectionCoords(direction: Direction) {
+const SLASHMAP: Record<Direction, Direction> = {
+  "North": Direction.East,
+  "East": Direction.North,
+  "South": Direction.West,
+  "West": Direction.South,
+};
+const BACKSLASHMAP: Record<Direction, Direction> = {
+  "North": Direction.West,
+  "East": Direction.South,
+  "South": Direction.East,
+  "West": Direction.North,
+};
+
+function getDelta(direction: Direction) {
   switch (direction) {
     case Direction.North:
       return [-1, 0];
-    case Direction.West:
-      return [0, -1];
-    case Direction.South:
-      return [1, 0];
     case Direction.East:
       return [0, 1];
+    case Direction.South:
+      return [1, 0];
+    case Direction.West:
+      return [0, -1];
   }
 }
 
@@ -23,75 +36,41 @@ export function findEnergizedTiles(
   y: number,
   x: number,
   direction: Direction,
-): number {
+) {
   const energizedTileCoords = new Set<string>();
   const uniqueEncounters = new Set<string>();
 
-  function moveBeam(y: number, x: number, direction: Direction) {
+  function moveBeam(y: number, x: number, dir: Direction) {
     if (grid[y] === undefined || grid[y][x] === undefined) return;
 
-    const key = `${y}_${x}_${direction}`;
+    const key = `${y}_${x}_${dir}`;
     if (uniqueEncounters.has(key)) return;
     uniqueEncounters.add(key);
     energizedTileCoords.add(`${y}_${x}`);
 
-    const [dy, dx] = getDirectionCoords(direction);
-    const nextY = y + dy;
-    const nextX = x + dx;
-
     const cell = grid[y][x];
-    switch (cell) {
-      case ".": {
-        moveBeam(nextY, nextX, direction);
-        break;
-      }
-      case "|": {
-        if (direction === Direction.East || direction === Direction.West) {
-          moveBeam(y - 1, x, Direction.North);
-          moveBeam(y + 1, x, Direction.South);
-        } else {
-          moveBeam(nextY, nextX, direction);
-        }
-        break;
-      }
-      case "-": {
-        if (direction === Direction.North || direction === Direction.South) {
-          moveBeam(y, x - 1, Direction.West);
-          moveBeam(y, x + 1, Direction.East);
-        } else {
-          moveBeam(nextY, nextX, direction);
-        }
-        break;
-      }
-      case "/": {
-        if (direction === Direction.North) {
-          moveBeam(y, x + 1, Direction.East);
-        } else if (direction === Direction.East) {
-          moveBeam(y - 1, x, Direction.North);
-        } else if (direction === Direction.South) {
-          moveBeam(y, x - 1, Direction.West);
-        } else if (direction === Direction.West) {
-          moveBeam(y + 1, x, Direction.South);
-        }
-        break;
-      }
-      case "\\": {
-        if (direction === Direction.North) {
-          moveBeam(y, x - 1, Direction.West);
-        } else if (direction === Direction.East) {
-          moveBeam(y + 1, x, Direction.South);
-        } else if (direction === Direction.South) {
-          moveBeam(y, x + 1, Direction.East);
-        } else if (direction === Direction.West) {
-          moveBeam(y - 1, x, Direction.North);
-        }
-        break;
-      }
+    let reflectedDir = dir;
 
-      default: {
-        throw new Error(`Unknown cell type: '${cell}'`);
+    if (cell === "|") {
+      if (dir === "East" || dir === "West") {
+        moveBeam(y - 1, x, Direction.North);
+        moveBeam(y + 1, x, Direction.South);
+        return;
       }
+    } else if (cell === "-") {
+      if (dir === "North" || dir === "South") {
+        moveBeam(y, x - 1, Direction.West);
+        moveBeam(y, x + 1, Direction.East);
+        return;
+      }
+    } else if (cell === "/") {
+      reflectedDir = SLASHMAP[dir];
+    } else if (cell == "\\") {
+      reflectedDir = BACKSLASHMAP[dir];
     }
+
+    const [dy, dx] = getDelta(reflectedDir);
+    moveBeam(y + dy, x + dx, reflectedDir);
   }
 
   moveBeam(y, x, direction);
