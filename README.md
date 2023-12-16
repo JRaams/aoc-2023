@@ -16,13 +16,19 @@ Go to the folder of the desired day
 
 Run part A or B, while allowing all permissions
 
-`deno run -A a.ts`
+`deno run --allow-read a.ts`
+
+OR
+
+`deno run --allow-read [daynumber]/[part].ts`
+
+For example: `deno run --allow-read 01/a.ts`
 
 ### 3. Testing
 
 `cd 01`
 
-`deno test -A .`
+`deno test .`
 
 ### 4. Debugging
 

@@ -1,6 +1,7 @@
 import { buildGrid, findVisitedPipes } from "./tile.ts";
 
-const lines = await Deno.readTextFile("./input.txt");
+const __dirname = new URL(".", import.meta.url).pathname;
+const lines = await Deno.readTextFile(__dirname + "/input.txt");
 const input = lines.trim().split("\n");
 
 const { tileGrid, startingTile } = buildGrid(input);

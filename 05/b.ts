@@ -1,4 +1,5 @@
-const input = await Deno.readTextFile("./input.txt");
+const __dirname = new URL(".", import.meta.url).pathname;
+const input = await Deno.readTextFile(__dirname + "/input.txt");
 const lines = input.trim().split("\n\n");
 
 const seeds = lines.splice(0, 1)[0].split(": ")[1].split(" ").map(Number);
