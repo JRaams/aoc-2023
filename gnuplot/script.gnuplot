@@ -10,7 +10,7 @@ set style fill solid
 set title "Solution runtime per day in ms" font ",16"
 set xlabel "Day" font ",12"
 set ylabel "Runtime (ms)" font ",12"
-set datafile separator ";"
+set datafile separator ","
                # using n -> nth column of csv
                # xtic(1) -> use first column as x-axis column labels
 plot "runtimes.csv" using 2:xtic(1) title "Part A" linecolor "#009900", \

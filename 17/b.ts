@@ -1,10 +1,5 @@
 import { Heap } from "../helpers/heap.ts";
-import {
-  moveForward,
-  Node,
-  nodeStringComparer,
-  tryNeighbours,
-} from "./node.ts";
+import { moveForward, Node, tryNeighbours } from "./node.ts";
 
 const __dirname = new URL(".", import.meta.url).pathname;
 const lines = await Deno.readTextFile(__dirname + "/input.txt");
@@ -15,16 +10,16 @@ const grid = lines.trim().split("\n").map((x) =>
 const TARGET_Y = grid.length - 1;
 const TARGET_X = grid[0].length - 1;
 const visited = new Set<string>();
-const openSet = new Heap<string>(
-  nodeStringComparer,
+const openSet = new Heap<Node>(
+  (a, b) => a.compare(b),
   [
-    new Node(0, 0, 0, 0, 1, 0).toString(), // Initial position, heading east
-    new Node(0, 0, 0, 1, 0, 0).toString(), // Initial position, heading south
+    new Node(0, 0, 0, 0, 1, 0), // Initial position, heading east
+    new Node(0, 0, 0, 1, 0, 0), // Initial position, heading south
   ],
 );
 
 while (!openSet.isEmpty()) {
-  const node = Node.fromString(openSet.pop()!);
+  const node = openSet.pop()!;
   const { heat, y, x, steps } = node;
 
   if (y === TARGET_Y && x == TARGET_X && steps >= 4) {

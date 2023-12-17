@@ -32,25 +32,10 @@ export class Node {
     if (this.heat === other.heat) return 0;
     return this.heat > other.heat ? 1 : -1;
   }
-
-  public toString(): string {
-    return JSON.stringify(this);
-  }
-
-  public static fromString(input: string): Node {
-    const { heat, y, x, dy, dx, steps } = JSON.parse(input);
-    return new Node(heat, y, x, dy, dx, steps);
-  }
-}
-
-export function nodeStringComparer(a: string, b: string): number {
-  const nodeA = Node.fromString(a);
-  const nodeB = Node.fromString(b);
-  return nodeA.compare(nodeB);
 }
 
 export function moveForward(
-  openSet: Heap<string>,
+  openSet: Heap<Node>,
   grid: number[][],
   node: Node,
 ) {
@@ -61,15 +46,14 @@ export function moveForward(
   if (!grid[nextY]?.[nextX]) return;
 
   openSet.insert(
-    new Node(heat + grid[nextY][nextX], nextY, nextX, dy, dx, steps + 1)
-      .toString(),
+    new Node(heat + grid[nextY][nextX], nextY, nextX, dy, dx, steps + 1),
   );
 }
 
 const DIRECTIONS = [[0, 1], [1, 0], [0, -1], [-1, 0]];
 
 export function tryNeighbours(
-  openSet: Heap<string>,
+  openSet: Heap<Node>,
   grid: number[][],
   node: Node,
 ) {
@@ -85,8 +69,7 @@ export function tryNeighbours(
     if (!grid[nextY]?.[nextX]) continue;
 
     openSet.insert(
-      new Node(heat + grid[nextY][nextX], nextY, nextX, newDy, newDx, 1)
-        .toString(),
+      new Node(heat + grid[nextY][nextX], nextY, nextX, newDy, newDx, 1),
     );
   }
 }
