@@ -23,7 +23,7 @@ while (!openSet.isEmpty()) {
   const { heat, y, x, steps } = node;
 
   if (y === TARGET_Y && x == TARGET_X) {
-    console.info("reached target!", heat);
+    console.info(heat);
     break;
   }
 

@@ -1,69 +1,82 @@
-use std::collections::HashMap;
 use std::fs;
 
-#[derive(PartialEq, Clone, Copy)]
-enum Direction {
-    North,
-    East,
-    South,
-    West,
-}
-
-fn get_next_pos(
-    dir: Direction,
-    y: usize,
-    x: usize,
-    max_y: usize,
-    max_x: usize,
-) -> Option<(usize, usize)> {
-    if dir == Direction::North && y > 0 {
-        return Some((y - 1, x));
-    }
-
-    if dir == Direction::East && x < max_x - 1 {
-        return Some((y, x + 1));
-    }
-
-    if dir == Direction::South && y < max_y - 1 {
-        return Some((y + 1, x));
-    }
-
-    if dir == Direction::West && x > 0 {
-        return Some((y, x - 1));
-    }
-
-    return None;
-}
-
-fn slide(grid: &mut Vec<Vec<char>>, direction: Direction) {
-    let mut has_change = false;
-
-    for y in 0..grid.len() {
+fn slide_north(grid: &mut Vec<Vec<char>>) {
+    for y in 1..grid.len() {
         for x in 0..grid[y].len() {
-            let cell = grid[y][x];
-            if cell != 'O' {
+            if grid[y][x] != 'O' {
                 continue;
             }
 
-            let next_pos_result = get_next_pos(direction, y, x, grid.len(), grid[y].len());
-            let next_cell_pos;
-
-            match next_pos_result {
-                Some(abc) => next_cell_pos = abc,
-                None => continue,
+            let mut next_y = y;
+            while next_y > 0 && grid[next_y - 1][x] == '.' {
+                next_y -= 1;
             }
 
-            let next_cell = grid[next_cell_pos.0][next_cell_pos.1];
-            if next_cell == '.' {
-                grid[next_cell_pos.0][next_cell_pos.1] = 'O';
+            if next_y != y {
+                grid[next_y][x] = 'O';
                 grid[y][x] = '.';
-                has_change = true;
             }
         }
     }
+}
 
-    if has_change {
-        slide(grid, direction);
+fn slide_west(grid: &mut Vec<Vec<char>>) {
+    for y in 0..grid.len() {
+        for x in 1..grid[y].len() {
+            if grid[y][x] != 'O' {
+                continue;
+            }
+
+            let mut next_x = x;
+            while next_x > 0 && grid[y][next_x - 1] == '.' {
+                next_x -= 1;
+            }
+
+            if next_x != x {
+                grid[y][next_x] = 'O';
+                grid[y][x] = '.';
+            }
+        }
+    }
+}
+
+fn slide_south(grid: &mut Vec<Vec<char>>) {
+    for y in (0..grid.len() - 1).rev() {
+        for x in 0..grid[y].len() {
+            if grid[y][x] != 'O' {
+                continue;
+            }
+
+            let mut next_y = y;
+            while next_y < grid.len() - 1 && grid[next_y + 1][x] == '.' {
+                next_y += 1;
+            }
+
+            if next_y != y {
+                grid[next_y][x] = 'O';
+                grid[y][x] = '.';
+            }
+        }
+    }
+}
+
+fn slide_east(grid: &mut Vec<Vec<char>>) {
+    for y in 0..grid.len() {
+        for x in (0..grid[y].len() - 1).rev() {
+            if grid[y][x] != 'O' {
+                continue;
+            }
+
+            let mut next_x = x;
+            while next_x < grid[y].len() - 1 && grid[y][next_x + 1] == '.' {
+                next_x += 1;
+            }
+
+            if next_x != x {
+                grid[y][next_x] = 'O';
+                grid[y][x] = '.';
+            }
+        }
     }
 }
 
@@ -85,46 +98,23 @@ fn main() {
         .map(|line| line.chars().collect::<Vec<_>>())
         .collect::<Vec<_>>();
 
-    let mut state_to_index_map: HashMap<String, i32> = HashMap::new();
-    let mut cycle = 1;
-    let start;
+    let mut visited_grids: Vec<Vec<Vec<char>>> = vec![grid.clone()];
 
-    loop {
-        slide(&mut grid, Direction::North);
-        slide(&mut grid, Direction::West);
-        slide(&mut grid, Direction::South);
-        slide(&mut grid, Direction::East);
+    for cycle in 1..1_000_000_000 {
+        slide_north(&mut grid);
+        slide_west(&mut grid);
+        slide_south(&mut grid);
+        slide_east(&mut grid);
 
-        let mut state = String::from("");
-        for y in 0..grid.len() {
-            for x in 0..grid[y].len() {
-                state.push(grid[y][x]);
-            }
-            state.push('\n');
-        }
-
-        if state_to_index_map.contains_key(&state) {
-            start = state_to_index_map.get(&state).unwrap();
-            break;
-        }
-
-        state_to_index_map.insert(state, cycle);
-        cycle += 1;
-    }
-
-    let period = cycle - start;
-    let last_cycle = ((1_000_000_000 - start) % period) + start;
-
-    for (key, value) in state_to_index_map {
-        if value == last_cycle {
-            let mut grid2 = key
-                .lines()
-                .map(|line| line.chars().collect::<Vec<_>>())
-                .collect::<Vec<_>>();
-
-            let load = calculate_load(&mut grid2);
+        if visited_grids.contains(&grid) {
+            let start = visited_grids.iter().position(|x| x == &grid).unwrap();
+            let period = cycle - start;
+            let last_cycle = ((1_000_000_000 - start) % period) + start;
+            let load = calculate_load(&mut visited_grids[last_cycle]);
             println!("{}", load);
-            break;
+            return;
         }
+
+        visited_grids.push(grid.clone());
     }
 }
