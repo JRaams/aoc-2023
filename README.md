@@ -74,3 +74,7 @@ Debugging in Visual Studio Code
 ### 6. Solution runtime
 
 ![Bar chart of solution runtime in ms](./gnuplot/runtimes.png)
+
+Notes:
+
+1. Day 14 rewritten in Rust (0.716 ms / 10 ms) vs Deno (20 ms / 763 ms)
