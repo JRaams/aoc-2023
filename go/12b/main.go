@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 func main() {
@@ -12,34 +13,43 @@ func main() {
 	if err != nil {
 		fmt.Print(err)
 	}
+
 	content := string(contentBytes)
 	lines := strings.Split(strings.TrimSpace(content), "\n")
 	arrangementsSum := int(0)
+	var wg sync.WaitGroup
 
 	for i := 0; i < len(lines); i++ {
-		cache := map[string]int{}
+		wg.Add(1)
+		i := i
 
-		splitLine := strings.Split(lines[i], " ")
-		springsStr := splitLine[0]
-		numbersStr := strings.Split(splitLine[1], ",")
+		go func() {
+			defer wg.Done()
+			cache := map[string]int{}
 
-		numbers := make([]int, len(numbersStr))
-		for j := 0; j < len(numbers); j++ {
-			parsedNumber, _ := strconv.ParseInt(numbersStr[j], 10, 64)
-			numbers[j] = int(parsedNumber)
-		}
+			splitLine := strings.Split(lines[i], " ")
+			springsStr := splitLine[0]
+			numbersStr := strings.Split(splitLine[1], ",")
 
-		unfoldedStrings := ""
-		unfoldedNumbers := make([]int, 0)
-		for k := 0; k < 5; k++ {
-			unfoldedStrings += springsStr + "?"
-			unfoldedNumbers = append(unfoldedNumbers, numbers...)
-		}
-		unfoldedStrings = unfoldedStrings[0 : len(unfoldedStrings)-1]
+			numbers := make([]int, len(numbersStr))
+			for j := 0; j < len(numbers); j++ {
+				parsedNumber, _ := strconv.ParseInt(numbersStr[j], 10, 64)
+				numbers[j] = int(parsedNumber)
+			}
 
-		arrangementsSum += countArrangements(unfoldedStrings, unfoldedNumbers, cache)
+			unfoldedStrings := ""
+			unfoldedNumbers := make([]int, 0)
+			for k := 0; k < 5; k++ {
+				unfoldedStrings += springsStr + "?"
+				unfoldedNumbers = append(unfoldedNumbers, numbers...)
+			}
+			unfoldedStrings = unfoldedStrings[0 : len(unfoldedStrings)-1]
+
+			arrangementsSum += countArrangements(unfoldedStrings, unfoldedNumbers, cache)
+		}()
 	}
 
+	wg.Wait()
 	fmt.Println(arrangementsSum)
 }
 
