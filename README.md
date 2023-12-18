@@ -70,6 +70,13 @@ Debugging in Visual Studio Code
     operations (Did day 5 and 15 get swapped..?)
 16. [**The Floor Will Be Lava**] Manouvering a light beam through a grid of
     lasers with offset mirrors, tricky rotations.
+17. [**Clumsy Crucible**] Modified Dijkstra's algorithm with a twist: maximum of
+    3 steps in the same direction then a required 90 degree turn. Using a heap
+    as priority queue to get candidates for the next node based on weight.
+18. [**Lavaduct Lagoon**] Calculating area of polynomal by first generating
+    points on a grid followed by use of shoelace formula and Pick's theorem to
+    find whole integer points inside the trench. Finally adding the whole trench
+    points to said number to get our solution.
 
 ### 6. Solution runtime
 
