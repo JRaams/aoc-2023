@@ -2,6 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "go: Launch file",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}/${relativeFileDirname}"
+    },
+    {
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
