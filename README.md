@@ -77,6 +77,7 @@ Debugging in Visual Studio Code
     points on a grid followed by use of shoelace formula and Pick's theorem to
     find whole integer points inside the trench. Finally adding the whole trench
     points to said number to get our solution.
+19. [**Aplenty**] Day 5 all over again: finding valid ranges of very large ints
 
 ### 6. Solution runtime
 
@@ -84,4 +85,6 @@ Debugging in Visual Studio Code
 
 Notes:
 
-1. Day 14 rewritten in Rust (0.716 ms / 10 ms) vs Deno (20 ms / 763 ms)
+1. Day 12 rewritten in Go (1.3 ms / 44 ms [32 ms with goroutines]) vs Deno (34
+   ms / 270 ms)
+2. Day 14 rewritten in Rust (0.716 ms / 10 ms) vs Deno (20 ms / 763 ms)
