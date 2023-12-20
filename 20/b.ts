@@ -1,15 +1,23 @@
+import { lcmBulk } from "../helpers/math.ts";
 import { loadModulesMap } from "./module.ts";
 
 const lines = await Deno.readTextFile("./input.txt");
 const input: string[] = lines.trim().split("\n");
 
 const modulesMap = loadModulesMap(input);
-let lowPulses = 0;
-let highPulses = 0;
 
-function pushButton() {
-  lowPulses++;
+const lastConjunctionName =
+  Object.entries(modulesMap).find(([_, module]) =>
+    module.outputNames.includes("rx")
+  )![0];
 
+let lastConjunctionInputs = Object.entries(modulesMap)
+  .filter(([_, module]) => module.outputNames.includes(lastConjunctionName))
+  .map((x) => x[0]);
+
+const cycles: Record<string, number> = {};
+
+outer: for (let i = 1;; i++) {
   const pulseQueue = modulesMap["broadcaster"].outputNames
     .map((x) => ({
       input: "broadcaster",
@@ -19,15 +27,19 @@ function pushButton() {
 
   while (pulseQueue.length > 0) {
     const { input, output, pulse } = pulseQueue.splice(0, 1)[0];
-
-    if (pulse) {
-      highPulses++;
-    } else {
-      lowPulses++;
-    }
-
     const module = modulesMap[output];
     if (module === undefined) continue;
+
+    if (module.name === lastConjunctionName && pulse === true) {
+      lastConjunctionInputs = lastConjunctionInputs.filter((x) => x !== input);
+      cycles[input] ??= i;
+
+      if (lastConjunctionInputs.length === 0) {
+        const rxLowPulse = lcmBulk(...Object.values(cycles));
+        console.info({ cycles, rxLowPulse });
+        break outer;
+      }
+    }
 
     if (module.type === "flip-flop" && pulse === false) {
       module.state = !module.state;
@@ -48,9 +60,3 @@ function pushButton() {
     }
   }
 }
-
-for (let i = 0; i < 1000; i++) {
-  pushButton();
-}
-
-console.info(lowPulses * highPulses);
