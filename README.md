@@ -78,6 +78,8 @@ Debugging in Visual Studio Code
     find whole integer points inside the trench. Finally adding the whole trench
     points to said number to get our solution.
 19. [**Aplenty**] Day 5 all over again: finding valid ranges of very large ints
+20. [**Pulse Propagation**] Mini electronic machine with low/high pulses and
+    boolean operations, cycle detection like day 14.
 
 ### 6. Solution runtime
 
