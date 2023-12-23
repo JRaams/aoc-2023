@@ -9,99 +9,89 @@ type Cell = {
   char: string;
 };
 
-const grid: Cell[][] = [];
-let cellId = 0;
+function loadGrid(lines: string[]) {
+  const grid: Cell[][] = [];
+  let cellId = 0;
 
-lines.forEach((line, y) => {
-  grid[y] = [];
-  line.trim().split("").forEach((char, x) => {
-    grid[y].push({ id: cellId++, y, x, char });
+  lines.forEach((line, y) => {
+    grid[y] = [];
+    line.trim().split("").forEach((char, x) => {
+      grid[y].push({ id: cellId++, y, x, char });
+    });
   });
-});
 
-function walk(current: Cell, steps: number, seen: Set<number>): number {
+  return grid;
+}
+
+function walk(
+  grid: Cell[][],
+  current: Cell,
+  steps: number,
+  seen: Set<number>,
+): number {
   if (seen.has(current.id)) return 0;
   seen.add(current.id);
-  let longestWalk = 0;
 
   if (current.y === lines.length - 1 && current.x === lines[0].length - 2) {
-    console.log("Reached destination!", steps);
     return steps;
   }
 
-  const north = grid.at(current.y - 1)?.at(current.x);
-  const east = grid.at(current.y)?.at(current.x + 1);
-  const south = grid.at(current.y + 1)?.at(current.x);
-  const west = grid.at(current.y)?.at(current.x - 1);
-
+  let max = 0;
   switch (current.char) {
     case ".": {
+      const north = grid.at(current.y - 1)?.at(current.x);
       if (north && north.char !== "#") {
-        longestWalk = Math.max(
-          longestWalk,
-          walk(north, steps + 1, new Set(seen)),
-        );
+        max = Math.max(max, walk(grid, north, steps + 1, new Set(seen)));
       }
+
+      const east = grid.at(current.y)?.at(current.x + 1);
       if (east && east.char !== "#") {
-        longestWalk = Math.max(
-          longestWalk,
-          walk(east, steps + 1, new Set(seen)),
-        );
+        max = Math.max(max, walk(grid, east, steps + 1, new Set(seen)));
       }
+
+      const south = grid.at(current.y + 1)?.at(current.x);
       if (south && south.char !== "#") {
-        longestWalk = Math.max(
-          longestWalk,
-          walk(south, steps + 1, new Set(seen)),
-        );
+        max = Math.max(max, walk(grid, south, steps + 1, new Set(seen)));
       }
+
+      const west = grid.at(current.y)?.at(current.x - 1);
       if (west && west.char !== "#") {
-        longestWalk = Math.max(
-          longestWalk,
-          walk(west, steps + 1, new Set(seen)),
-        );
+        max = Math.max(max, walk(grid, west, steps + 1, new Set(seen)));
       }
       break;
     }
     case "^": {
+      const north = grid.at(current.y - 1)?.at(current.x);
       if (north && north.char !== "#") {
-        longestWalk = Math.max(
-          longestWalk,
-          walk(north, steps + 1, new Set(seen)),
-        );
+        max = Math.max(max, walk(grid, north, steps + 1, new Set(seen)));
       }
       break;
     }
     case ">": {
+      const east = grid.at(current.y)?.at(current.x + 1);
       if (east && east.char !== "#") {
-        longestWalk = Math.max(
-          longestWalk,
-          walk(east, steps + 1, new Set(seen)),
-        );
+        max = Math.max(max, walk(grid, east, steps + 1, new Set(seen)));
       }
       break;
     }
     case "v": {
+      const south = grid.at(current.y + 1)?.at(current.x);
       if (south && south.char !== "#") {
-        longestWalk = Math.max(
-          longestWalk,
-          walk(south, steps + 1, new Set(seen)),
-        );
+        max = Math.max(max, walk(grid, south, steps + 1, new Set(seen)));
       }
       break;
     }
     case "<": {
+      const west = grid.at(current.y)?.at(current.x - 1);
       if (west && west.char !== "#") {
-        longestWalk = Math.max(
-          longestWalk,
-          walk(west, steps + 1, new Set(seen)),
-        );
+        max = Math.max(max, walk(grid, west, steps + 1, new Set(seen)));
       }
       break;
     }
   }
 
-  return longestWalk;
+  return max;
 }
 
-// 2442
-console.info(walk(grid[0][1], 0, new Set()));
+const grid = loadGrid(lines);
+console.info(walk(grid, grid[0][1], 0, new Set()));

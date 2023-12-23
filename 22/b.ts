@@ -11,9 +11,8 @@ bricks.sort((a, b) => a.zMin - b.zMin);
 drop(bricks);
 
 let count = 0;
-const unsafe = getUnsafe(bricks);
 
-Array.from(unsafe).forEach((ub) => {
+Array.from(getUnsafe(bricks)).forEach((ub) => {
   const queue: Brick[] = Array.from(ub.supports);
   const seen = new Set<number>();
   const fallen = new Set<number>([ub.index]);
