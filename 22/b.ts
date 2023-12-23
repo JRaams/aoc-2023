@@ -14,19 +14,12 @@ let count = 0;
 const unsafe = getUnsafe(bricks);
 
 Array.from(unsafe).forEach((ub) => {
-  // console.info("ub", ub.index);
   const queue: Brick[] = Array.from(ub.supports);
   const seen = new Set<number>();
   const fallen = new Set<number>([ub.index]);
 
   while (queue.length > 0) {
     const item = queue.splice(0, 1)[0];
-    // console.info(
-    //   "item",
-    //   item.index,
-    //   Array.from(item.supportedBy).map((x) => x.index),
-    // );
-    // console.info("fallen", fallen);
     if (Array.from(item.supportedBy).every((x) => fallen.has(x.index))) {
       count++;
       fallen.add(item.index);
@@ -38,11 +31,10 @@ Array.from(unsafe).forEach((ub) => {
       queue.push(s);
     });
 
-    queue.sort((a, b) => a.zMin - b.zMin);
+    if (item.supports.size > 0) {
+      queue.sort((a, b) => a.zMin - b.zMin);
+    }
   }
 });
 
-// 93788 too low
-// 102770 correct
-// 127620 too high
 console.info(count);
