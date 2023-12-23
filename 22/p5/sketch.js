@@ -1,51 +1,24 @@
-// const cubes = [
-//   { x: 1, y: 0, z: 1, brick: 0 },
-//   { x: 1, y: 1, z: 1, brick: 0 },
-//   { x: 1, y: 2, z: 1, brick: 0 },
-//   { x: 0, y: 0, z: 2, brick: 1 },
-//   { x: 1, y: 0, z: 2, brick: 1 },
-//   { x: 2, y: 0, z: 2, brick: 1 },
-//   { x: 0, y: 2, z: 3, brick: 2 },
-//   { x: 1, y: 2, z: 3, brick: 2 },
-//   { x: 2, y: 2, z: 3, brick: 2 },
-//   { x: 0, y: 0, z: 4, brick: 3 },
-//   { x: 0, y: 1, z: 4, brick: 3 },
-//   { x: 0, y: 2, z: 4, brick: 3 },
-//   { x: 2, y: 0, z: 5, brick: 4 },
-//   { x: 2, y: 1, z: 5, brick: 4 },
-//   { x: 2, y: 2, z: 5, brick: 4 },
-//   { x: 0, y: 1, z: 6, brick: 5 },
-//   { x: 1, y: 1, z: 6, brick: 5 },
-//   { x: 2, y: 1, z: 6, brick: 5 },
-//   { x: 1, y: 1, z: 8, brick: 6 },
-//   { x: 1, y: 1, z: 9, brick: 6 },
-// ];
-
-const cubes = [
-  { x: 1, y: 0, z: 0, brick: 0 },
-  { x: 1, y: 1, z: 0, brick: 0 },
-  { x: 1, y: 2, z: 0, brick: 0 },
-  { x: 0, y: 0, z: 1, brick: 1 },
-  { x: 1, y: 0, z: 1, brick: 1 },
-  { x: 2, y: 0, z: 1, brick: 1 },
-  { x: 0, y: 2, z: 1, brick: 2 },
-  { x: 1, y: 2, z: 1, brick: 2 },
-  { x: 2, y: 2, z: 1, brick: 2 },
-  { x: 0, y: 0, z: 2, brick: 3 },
-  { x: 0, y: 1, z: 2, brick: 3 },
-  { x: 0, y: 2, z: 2, brick: 3 },
-  { x: 2, y: 0, z: 2, brick: 4 },
-  { x: 2, y: 1, z: 2, brick: 4 },
-  { x: 2, y: 2, z: 2, brick: 4 },
-  { x: 0, y: 1, z: 3, brick: 5 },
-  { x: 1, y: 1, z: 3, brick: 5 },
-  { x: 2, y: 1, z: 3, brick: 5 },
-  { x: 1, y: 1, z: 4, brick: 6 },
-  { x: 1, y: 1, z: 5, brick: 6 },
+const bricks1 = [
+  { "x1": 1, "y1": 0, "z1": 1, "x2": 1, "y2": 2, "z2": 1 },
+  { "x1": 0, "y1": 0, "z1": 2, "x2": 2, "y2": 0, "z2": 2 },
+  { "x1": 0, "y1": 2, "z1": 3, "x2": 2, "y2": 2, "z2": 3 },
+  { "x1": 0, "y1": 0, "z1": 4, "x2": 0, "y2": 2, "z2": 4 },
+  { "x1": 2, "y1": 0, "z1": 5, "x2": 2, "y2": 2, "z2": 5 },
+  { "x1": 0, "y1": 1, "z1": 6, "x2": 2, "y2": 1, "z2": 6 },
+  { "x1": 1, "y1": 1, "z1": 8, "x2": 1, "y2": 1, "z2": 9 },
 ];
-const bricks = cubes.at(-1).brick + 1;
+const bricks2 = [
+  { "x1": 1, "y1": 0, "z1": 1, "x2": 1, "y2": 2, "z2": 1 },
+  { "x1": 0, "y1": 0, "z1": 2, "x2": 2, "y2": 0, "z2": 2 },
+  { "x1": 0, "y1": 2, "z1": 2, "x2": 2, "y2": 2, "z2": 2 },
+  { "x1": 0, "y1": 0, "z1": 3, "x2": 0, "y2": 2, "z2": 3 },
+  { "x1": 2, "y1": 0, "z1": 3, "x2": 2, "y2": 2, "z2": 3 },
+  { "x1": 0, "y1": 1, "z1": 4, "x2": 2, "y2": 1, "z2": 4 },
+  { "x1": 1, "y1": 1, "z1": 5, "x2": 1, "y2": 1, "z2": 6 },
+];
 
 const SCALE = 55;
+let bricks = structuredClone(bricks1);
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -57,6 +30,14 @@ function setup() {
     sensitivity: 0.05,
     speed: 10,
   });
+}
+
+function keyPressed() {
+  if (key === "1") {
+    bricks = structuredClone(bricks1);
+  } else if (key === "2") {
+    bricks = structuredClone(bricks2);
+  }
 }
 
 function draw() {
@@ -72,13 +53,19 @@ function draw() {
   plane(1000, 1000);
   pop();
 
-  // Cubes
-  const step = 360 / bricks;
-  cubes.forEach((cube) => {
-    push();
-    translate(cube.x * SCALE, -cube.z * SCALE, cube.y * SCALE);
-    fill(`hsl(${Math.floor(cube.brick * step)}, 100%, 50%)`);
-    box(50, 50);
-    pop();
+  // Bricks
+  const step = 360 / bricks.length;
+  bricks.forEach((brick, index) => {
+    for (let x = brick.x1; x <= brick.x2; x++) {
+      for (let y = brick.y1; y <= brick.y2; y++) {
+        for (let z = brick.z1; z <= brick.z2; z++) {
+          push();
+          translate(x * SCALE, -z * SCALE, y * SCALE);
+          fill(`hsl(${Math.floor(index * step)}, 100%, 50%)`);
+          box(SCALE, SCALE);
+          pop();
+        }
+      }
+    }
   });
 }
