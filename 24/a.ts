@@ -24,7 +24,7 @@ function loadHail(input: string[]): Hail[] {
     // y = ax + b
     const a = vy / vx;
     const b = py - (px / (vx / vy));
-    const equation = `y = ${a}x ${b > 0 ? "+" : "-"} ${b}`;
+    const equation = `y = ${a}x ${b > 0 ? "+" : ""} ${b}`;
 
     hailStones.push({ px, py, vx, vy, a, b, equation });
   });
@@ -36,8 +36,6 @@ const hail = loadHail(input);
 let intersectionsInTestArea = 0;
 const AREA_MIN = 200_000_000_000_000;
 const AREA_MAX = 400_000_000_000_000;
-// const AREA_MIN = 7;
-// const AREA_MAX = 27;
 
 for (let i = 0; i < hail.length; i++) {
   const current = hail[i];
@@ -74,7 +72,4 @@ for (let i = 0; i < hail.length; i++) {
   }
 }
 
-// 10031 too low
-// 14799
-// 17967 too high
 console.info(intersectionsInTestArea);

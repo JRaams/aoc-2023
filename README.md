@@ -84,6 +84,9 @@ Debugging in Visual Studio Code
 22. [**Sand Slabs**] Falling jenga block simulation (without tilting physics)
 23. [**A Long Walk**] Finding longest possible path start-end in a maze-like
     grid
+24. [**Never Tell Me The Odds**] Calculating intersections between multiple
+    linear equations (a) and creating an intersecting line in 3D out of thin air
+    (b).
 
 ### 6. Solution runtime
 
