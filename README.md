@@ -82,6 +82,8 @@ Debugging in Visual Studio Code
     boolean operations, cycle detection like day 14.
 21.
 22. [**Sand Slabs**] Falling jenga block simulation (without tilting physics)
+23. [**A Long Walk**] Finding longest possible path start-end in a maze-like
+    grid
 
 ### 6. Solution runtime
 
