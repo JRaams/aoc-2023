@@ -4,8 +4,9 @@ const lines = [
   { x: 20, y: 25, z: 34, dx: -2, dy: -2, dz: -4 },
   { x: 12, y: 31, z: 28, dx: -1, dy: -2, dz: -1 },
   { x: 20, y: 19, z: 15, dx: 1, dy: -5, dz: -3 },
-  { x: 24, y: 13, z: 10, dx: -3, dy: 1, dz: 2 },
 ];
+
+const solutionLine = { x: 24, y: 13, z: 10, dx: -3, dy: 1, dz: 2 };
 
 const intersections = [
   { x: 9, y: 18, z: 20 },
@@ -15,7 +16,7 @@ const intersections = [
   { x: 21, y: 14, z: 12 },
 ];
 
-let showLastLine = false;
+let showSolutionLine = false;
 let showIntersections = false;
 
 function setup() {
@@ -32,13 +33,13 @@ function setup() {
 
 function keyPressed() {
   if (key === "1") {
-    showLastLine = false;
+    showSolutionLine = false;
     showIntersections = false;
   } else if (key === "2") {
-    showLastLine = true;
+    showSolutionLine = true;
     showIntersections = false;
   } else if (key === "3") {
-    showLastLine = true;
+    showSolutionLine = true;
     showIntersections = true;
   }
 }
@@ -71,11 +72,7 @@ function draw() {
   pop();
 
   // Lines
-  lines.forEach((l, i) => {
-    if (i === lines.length - 1 && !showLastLine) {
-      return;
-    }
-
+  lines.forEach((l) => {
     const x1 = l.x;
     const y1 = l.y;
     const z1 = l.z;
@@ -87,11 +84,6 @@ function draw() {
     strokeWeight(2);
     stroke(255);
 
-    if (i === lines.length - 1) {
-      strokeWeight(3);
-      stroke(0, 255, 0);
-    }
-
     line(x1, y1, z1, x2, y2, z2);
     pop();
 
@@ -101,6 +93,29 @@ function draw() {
     box(1, 1);
     pop();
   });
+
+  // Solution lines
+  if (showSolutionLine) {
+    const x1 = solutionLine.x;
+    const y1 = solutionLine.y;
+    const z1 = solutionLine.z;
+    const x2 = solutionLine.x + lineLength * solutionLine.dx;
+    const y2 = solutionLine.y + lineLength * solutionLine.dy;
+    const z2 = solutionLine.z + lineLength * solutionLine.dz;
+
+    push();
+    strokeWeight(3);
+    stroke(0, 255, 0);
+
+    line(x1, y1, z1, x2, y2, z2);
+    pop();
+
+    push();
+    translate(x1, y1, z1);
+    fill(149, 155, 247);
+    box(1, 1);
+    pop();
+  }
 
   // Intersections
   if (showIntersections) {
