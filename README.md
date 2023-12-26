@@ -4,6 +4,8 @@ https://adventofcode.com/2023 by [Eric Wastl](http://was.tl/)
 
 Solutions using TypeScript \w Deno v1.38
 
+![Home page ascii art](./assets/home.png)
+
 ### 1. Requirements
 
 - Deno https://docs.deno.com/runtime/manual/getting_started/installation
@@ -48,22 +50,22 @@ Debugging in Visual Studio Code
    numbers
 3. [**Gear Ratios**] Parsing a giant grid with multi column numbers
 4. [**Scratchcards**] Lidl recursion on scratchcard winnings
-5. [**If You Give A Seed A Fertilizer**] 😠 Collapsing multiple ranges of very
+5. [**If You Give A Seed A Fertilizer**] Collapsing multiple ranges of very
    large numbers
 6. [**Wait For It**] Quick maths with quadratic formula
 7. [**Camel Cards**] Poker with joker cards
 8. [**Haunted Wasteland**] Simultaneous node traversal with LCM
 9. [**Mirage Maintenance**] Predicting next value of number sequence via
    extrapolation
-10. [**Pipe Maze**] 😠 Grid problem with multiple connected pipes creating a
-    single continuous loop. Using a parity counter to keep track of passed walls
-    to calculate area inside the loop.
+10. [**Pipe Maze**] Grid problem with multiple connected pipes creating a single
+    continuous loop. Using a parity counter to keep track of passed walls to
+    calculate area inside the loop.
 11. [**Cosmic Expansion**] Calculating distances of all combinations of items in
     an expanding grid.
 12. [**Hot Springs**] Generating and validating arrangements of strings with
     joker characters
-13. [**Point of Incidence**] 😠 Finding lines between columns and rows on grids
-    to fold over and create a mirror image
+13. [**Point of Incidence**] Finding lines between columns and rows on grids to
+    fold over and create a mirror image
 14. [**Parabolic Reflector Dish**] Rolling balls NESW on a tilting grid, cycle
     detection to prevent doing this a literal billion times.
 15. [**Lens Library**] Creating a simple hashing function & some simple array
@@ -80,13 +82,15 @@ Debugging in Visual Studio Code
 19. [**Aplenty**] Day 5 all over again: finding valid ranges of very large ints
 20. [**Pulse Propagation**] Mini electronic machine with low/high pulses and
     boolean operations, cycle detection like day 14.
-21.
+21. [**Step Counter**] Counting reachable positions in an infinitely repeating
+    grid, using lagrange interpolation to predict values very far away.
 22. [**Sand Slabs**] Falling jenga block simulation (without tilting physics)
 23. [**A Long Walk**] Finding longest possible path start-end in a maze-like
     grid
 24. [**Never Tell Me The Odds**] Calculating intersections between multiple
     linear equations (a) and creating an intersecting line in 3D out of thin air
     (b).
+25. [**Snowverload**] Splitting up a graph of nodes by cutting 3 connections.
 
 ### 6. Solution runtime
 

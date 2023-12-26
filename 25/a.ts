@@ -4,7 +4,7 @@ const __dirname = new URL(".", import.meta.url).pathname;
 const lines = await Deno.readTextFile(__dirname + "/input.txt");
 const input = lines.trim().split("\n");
 
-// 1. Get a list of unique nodes and connections between nodes (neighbours list map)
+// 1. Get a list of unique nodes and connections between nodes (neighbours map)
 const uniqueNodes = new Set<string>();
 const connections = defaultDict<Set<string>>(() => new Set());
 
